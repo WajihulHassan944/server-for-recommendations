@@ -75,7 +75,7 @@ app.post('/recommendation', async (req, res) => {
       html: `
         <p>A new recommendation has been submitted by ${name}.</p>
         <p>Recommendation: ${text}</p>
-        <button><a href="http://localhost:${PORT}/approve/${newRecommendation._id}">Approve</a></button>
+        <button><a href="https://server-for-recommendations.vercel.app/approve/${newRecommendation._id}">Approve</a></button>
       `,
     };
 
