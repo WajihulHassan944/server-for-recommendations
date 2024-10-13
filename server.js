@@ -69,7 +69,7 @@ app.post('/recommendation', async (req, res) => {
 
     const mailOptions = {
       from: 'vascularbundle43@gmail.com',
-      to: 'wajih786hassan@gmail.com',
+      to: 'tjain1609@gmail.com',
       subject: 'New Recommendation Submitted',
       html: `
         <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
