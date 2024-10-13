@@ -60,7 +60,6 @@ app.get('/recommendations', async (req, res) => {
   }
 });
 
-
 // POST: Submit recommendation and send email
 app.post('/recommendation', async (req, res) => {
   try {
@@ -73,9 +72,16 @@ app.post('/recommendation', async (req, res) => {
       to: 'wajih786hassan@gmail.com',
       subject: 'New Recommendation Submitted',
       html: `
-        <p>A new recommendation has been submitted by ${name}.</p>
-        <p>Recommendation: ${text}</p>
-        <button><a href="https://server-for-recommendations.vercel.app/approve/${newRecommendation._id}">Approve</a></button>
+        <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+          <h2>New Recommendation from ${name}</h2>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Recommendation:</strong> ${text}</p>
+          <p>Click below to approve this recommendation:</p>
+          <a href="https://server-for-recommendations.vercel.app/approve/${newRecommendation._id}" 
+             style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">
+             Approve
+          </a>
+        </div>
       `,
     };
 
@@ -89,6 +95,20 @@ app.post('/recommendation', async (req, res) => {
     res.status(400).json({ message: 'Error submitting recommendation', error });
   }
 });
+
+// DELETE: Delete a recommendation by ID
+app.delete('/recommendation/:id', async (req, res) => {
+  try {
+    const recommendation = await Recommendation.findByIdAndDelete(req.params.id);
+    if (!recommendation) {
+      return res.status(404).json({ message: 'Recommendation not found' });
+    }
+    res.status(200).json({ message: 'Recommendation deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting recommendation', error });
+  }
+});
+
 
 // GET: Approve recommendation
 app.get('/approve/:id', async (req, res) => {
